@@ -1,0 +1,58 @@
+.App {
+  &__wrapper {
+  //width: 1440px;
+  min-height: 100vh;
+  //top: -512px;
+  //left: -721px;
+  //gap: 0px;
+  //opacity: 0px;
+  background: #EBEEF3;
+  font-family: 'Inter-UI', serif;
+
+  font-size: 18px;
+  line-height: 28px;
+  text-align: left;
+}
+  &__header {
+    height: 80px;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__button-wrapper {
+    //styleName: H6 - Header 6;
+    margin-top: 16px;
+    margin-right: 22px
+  }
+  &__sign-in {
+    width: 109px;
+    height: 51px;
+    border: none;
+    background-color: transparent;
+    margin-right: 19px;
+
+
+  }
+  &__sign-up {
+    width: 109px;
+    height: 51px;
+    border-radius: 5px;
+    border: 1px solid #52C41A;
+    color: #52C41A;
+    background-color: transparent;
+  }
+  &__name {
+    //width: 147px;
+    height: 56px;
+    padding: 1em 0 1em 0;
+
+    & > span {
+      display: block;
+      margin: 9px 0 0 22px
+      //vertical-align: middle;
+    }
+  }
+}
+
+
+

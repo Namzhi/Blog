@@ -1,0 +1,47 @@
+.article-item{
+&__wrapper {
+  width: 938px;
+  height: 140px;
+
+  border-radius: 5px;
+  background: #ffffff;
+
+  box-shadow: 0px 4px 12px 0px #00000026;
+
+  margin-bottom: 26px;
+}
+  &__header {
+    height: 67px;
+    display: flex;
+  }
+
+  &__title-tags-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+  }
+
+  &__likes {
+  }
+
+  &__tags {
+    display: flex;
+  }
+
+  &__profile {
+  }
+
+  &__name {
+  }
+
+  &__date {
+  }
+
+  &__photo {
+  }
+
+  &__description {
+  }
+}

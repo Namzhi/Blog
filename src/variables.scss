@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Inter-UI';
+  src:
+    local('Inter-UI'),
+    url('fonts/inter-ui-cufonfonts/Inter-UI-Regular.otf') format('opentype');
+}
+//@font-face {
+//  font-family: 'Open-Sans-bold';
+//  src:
+//    local('Open Sans Bold'),
+//    url('fonts/Open_Sans/OpenSans-Bold.ttf') format('truetype');
+//}
+
+$screen-xs: 320px;
+$screen-sm: 576px;
+$screen-md: 768px;
+
+@mixin unbuttonize {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  font: inherit;
+  border-radius: 0;
+  appearance: none; // Just in case we missed anything.
+}
