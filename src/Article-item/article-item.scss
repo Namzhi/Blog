@@ -1,0 +1,89 @@
+.article-item {
+  &__wrapper {
+    width: 938px;
+    height: 140px;
+
+    border-radius: 5px;
+    background: #ffffff;
+
+    box-shadow: 0px 4px 12px 0px #00000026;
+    padding: 15px 16px 24px 16px;
+    margin-bottom: 26px;
+  }
+  &__header {
+    height: 67px;
+    display: flex;
+  }
+
+  &__title-tags-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    //styleName: H5 - Header 5;
+    //font-family: 'Inter-UI', serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: left;
+    color: #1890ff;
+  }
+
+  &__likes {
+    width: 34px;
+    height: 22px;
+    margin-left: 13px;
+    &::before {
+      display: inline-block;
+      content: url('../images/heart.svg');
+      transform: translateY(2px);
+      margin-right: 5px;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    & > li {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: left;
+      padding: 0 5px;
+      //vertical-align: center;
+      //width: 38px;
+      height: 20px;
+      border-radius: 2px;
+      margin-right: 8px;
+      //border: 1px 0px 0px 0px;
+
+      border: 1px solid #00000080;
+    }
+  }
+
+  &__profile {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    height: 70px;
+    flex-wrap: wrap;
+  }
+
+  &__name {
+  }
+
+  &__date {
+  }
+
+  &__photo {
+    width: 46px;
+    height: 46px;
+    margin-left: 12px;
+    & > img {
+      width: 100%;
+    }
+  }
+
+  &__description {
+  }
+}

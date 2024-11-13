@@ -1,31 +1,33 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { Navigate, useNavigate } from 'react-router-dom'
 
-import { setUser } from 'store/slice/userSlice'
+// import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { registerUser } from 'store/slice/userSlice'
 
-import { Form } from './Form'
+import { useAuth } from '../hooks/use-auth'
+
+import { FormRegister } from './Form-register'
 
 const SignUp = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const handleRegister = (email, password) => {
-    const auth = getAuth()
+  const { isAuth, email } = useAuth()
+  // const isAuth = useSelector((state) => state.user.isAuth)
+  // console.log(isAuth)
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
-        console.log(user)
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.accessToken,
-          })
-        )
-        navigate('/')
+  const handleRegister = (username, email, password) => {
+    dispatch(
+      registerUser({
+        user: {
+          username: username,
+          email: email,
+          password: password,
+        },
       })
-      .catch(console.error)
+    )
+    // console.log(isAuth, email)
   }
-  return <Form title="register" handleClick={handleRegister} />
+
+  return !isAuth ? <FormRegister title="register" handleClick={handleRegister} /> : <Navigate to={'/'} />
 }
 export { SignUp }

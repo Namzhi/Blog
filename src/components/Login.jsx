@@ -1,31 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 
-import { setUser } from 'store/slice/userSlice'
+import { loginUser, setUser } from 'store/slice/userSlice'
 
-import { Form } from './Form'
+import { useAuth } from '../hooks/use-auth'
+
+import { FormLogin } from './Form-login'
+
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { isAuth } = useAuth()
 
-  const handleLogin = (email, password) => {
-    const auth = getAuth()
-    console.log(auth)
-    signInWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
-        console.log(user)
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.accessToken,
-          })
-        )
-        navigate('/')
-      })
-      .catch(() => alert('Invalid user'))
-  }
-  return <Form title="sign in" handleClick={handleLogin} />
+  return !isAuth ? <FormLogin title="sign in" /> : <Navigate to={'/'} />
 }
 export { Login }

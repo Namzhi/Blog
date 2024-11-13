@@ -1,28 +1,28 @@
 .App {
   &__wrapper {
-  //width: 1440px;
-  min-height: 100vh;
-  //top: -512px;
-  //left: -721px;
-  //gap: 0px;
-  //opacity: 0px;
-  background: #EBEEF3;
-  font-family: 'Inter-UI', serif;
+    //width: 1440px;
+    min-height: 100vh;
+    //top: -512px;
+    //left: -721px;
+    //gap: 0px;
+    //opacity: 0px;
+    background: #ebeef3;
+    font-family: 'Inter-UI', serif;
 
-  font-size: 18px;
-  line-height: 28px;
-  text-align: left;
-}
+    font-size: 18px;
+    line-height: 28px;
+    text-align: left;
+  }
   &__header {
     height: 80px;
-    background: #FFFFFF;
+    background: #ffffff;
     display: flex;
     justify-content: space-between;
   }
   &__button-wrapper {
     //styleName: H6 - Header 6;
     margin-top: 16px;
-    margin-right: 22px
+    margin-right: 22px;
   }
   &__sign-in {
     width: 109px;
@@ -30,15 +30,22 @@
     border: none;
     background-color: transparent;
     margin-right: 19px;
-
-
   }
   &__sign-up {
     width: 109px;
     height: 51px;
     border-radius: 5px;
-    border: 1px solid #52C41A;
-    color: #52C41A;
+    border: 1px solid #52c41a;
+    color: #52c41a;
+    background-color: transparent;
+  }
+  &__log-out {
+    width: 109px;
+    height: 51px;
+    border-radius: 5px;
+    border: 1px solid #000000bf;
+    color: #000000bf;
+
     background-color: transparent;
   }
   &__name {
@@ -48,11 +55,8 @@
 
     & > span {
       display: block;
-      margin: 9px 0 0 22px
+      margin: 9px 0 0 22px;
       //vertical-align: middle;
     }
   }
 }
-
-
-

@@ -1,55 +1,73 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-
+// import fetchArticles from '../thunks'
 const initialState = {
   articles: [],
   articlesCount: 0,
+  oneArticle: {},
+  loading: false,
+  error: false,
 }
-export const fetchArticles = createAsyncThunk('articles/getArticles', (page) => {
-  console.log(page)
-  return axios.get('https://blog-platform.kata.academy/api/articles').then(
-    (response) => response.data.articles
-    // .data.map((el) => {
-    // console.log(el)
-    // })
-  )
-})
-//   const response = await fetch('https://blog-platform.kata.academy/api/articles')
-//   if (!response.ok) {
-//     throw new Error('Failed to fetch articles')
-//   }
-//   // const jsonData =
-//   return await response.json()
-// } catch (error) {
-//   return rejectWithValue(error.message)
-// }
 
+// console.log(fetchArticles)
+export const fetchArticles = createAsyncThunk('articles/getArticles', async (page, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(
+      `https://blog-platform.kata.academy/api/articles?limit=${page * 5}&offset=${page * 5 - 5}`
+    )
+    return response.data
+  } catch (err) {
+    console.log(err)
+    return rejectWithValue('The error occurred while fetching articles')
+  }
+})
+
+export const fetchOneArticle = createAsyncThunk('articles/getOneArticle', async (slug, { rejectWithValue }) => {
+  try {
+    const response = await axios
+      .get(`https://blog-platform.kata.academy/api/articles/${slug}`)
+      .then((response) => response.data)
+    return response
+  } catch (err) {
+    return rejectWithValue('The error occurred while fetching an article')
+  }
+})
 const articleSlice = createSlice({
   name: 'article',
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchArticles.pending, (state, action) => {
-      // state.articles = action.payload
-      // console.log(action.payload)
-      // console.log(state)
+      state.loading = true
+      state.error = false
     })
     builder.addCase(fetchArticles.fulfilled, (state, action) => {
-      state.articles = action.payload
-      // console.log(action.payload)
-      // console.log(state)
+      state.articles = action.payload.articles
+      state.articlesCount = action.payload.articlesCount
+      state.loading = false
+      state.error = false
     })
     builder.addCase(fetchArticles.rejected, (state, action) => {
       state.articles = []
-      // console.log(action.payload)
-      // console.log(state)
+      state.articlesCount = 0
+
+      state.error = action.payload
+      state.loading = false
     })
-    // getArticles(state, action) {
-    //   return async function (dispatch) {
-    //     const response = await fetch('https://blog-platform.kata.academy/api/articles')
-    //     const jsonData = await response.json()
-    //     state.articles = jsonData
-    //   }
-    // },
+    builder.addCase(fetchOneArticle.pending, (state, action) => {
+      state.loading = true
+      state.error = false
+    })
+    builder.addCase(fetchOneArticle.fulfilled, (state, action) => {
+      state.oneArticle = action.payload.article
+      state.loading = false
+      state.error = false
+    })
+    builder.addCase(fetchOneArticle.rejected, (state, action) => {
+      state.error = action.payload
+      state.loading = false
+    })
+
     // removeUser(state) {
     //   state.email = null
     //   state.token = null

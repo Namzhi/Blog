@@ -13,6 +13,10 @@
     "format": "prettier ."
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.6",
+    "@mui/material": "^6.1.6",
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.3.0",
     "@testing-library/jest-dom": "^6.4.8",
@@ -57,6 +61,7 @@
     "lint-staged": "^15.2.10",
     "normalize.css": "^8.0.1",
     "prettier": "^3.3.2",
+    "react-hook-form": "^7.53.2",
     "sass": "^1.79.4",
     "stylelint": "^16.7.0",
     "stylelint-config-standard": "^36.0.1"
