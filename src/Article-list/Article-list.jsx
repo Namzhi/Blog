@@ -20,8 +20,11 @@ export const ArticleList = (props) => {
   const pageQty = useSelector((state) => {
     return Math.floor(state.article.articlesCount / 5) + 1
   })
+  const isLoading = useSelector((state) => {
+    return state.user.loading
+  })
   const error = useSelector((state) => state.article.error)
-
+  // const isLoading = useSelector((state) => state.s)
   // const [pageQty, setPageQty] = useState(1)
   useEffect(() => {
     // console.log(page)
@@ -31,10 +34,9 @@ export const ArticleList = (props) => {
   const arr = articles.map((res, i) => <ArticleItem key={uniqid()} props={res} />)
   return (
     <div className="article-list__wrapper">
-      <Spin />
       {error && <div className={'error-message'}>{error}</div>}
+      {isLoading ? <Spin /> : <ul className="article-list">{arr}</ul>}
 
-      <ul className="article-list">{arr}</ul>
       {!!pageQty && (
         <Pagination
           count={pageQty}

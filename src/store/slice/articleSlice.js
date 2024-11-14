@@ -13,11 +13,10 @@ const initialState = {
 export const fetchArticles = createAsyncThunk('articles/getArticles', async (page, { rejectWithValue }) => {
   try {
     const response = await axios.get(
-      `https://blog-platform.kata.academy/api/articles?limit=${page * 5}&offset=${page * 5 - 5}`
+      `https://blog-platform.kata.academy/api/articles?limit=${5}&offset=${page * 5 - 5}`
     )
     return response.data
   } catch (err) {
-    console.log(err)
     return rejectWithValue('The error occurred while fetching articles')
   }
 })
