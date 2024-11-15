@@ -7,6 +7,7 @@ import './article-post.scss'
 import Spin from '../Spin'
 export default function ArticlePost() {
   let { slug } = useParams()
+  console.log(useParams())
   const dispatch = useDispatch()
   const error = useSelector((state) => state.article.error)
   console.log(error)
