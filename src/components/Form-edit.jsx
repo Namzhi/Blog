@@ -99,11 +99,11 @@ export const FormEdit = ({ title }) => {
           type="text"
           placeholder="image"
           {...register('image', {
-            pattern: {
-              value:
-                /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/,
-              message: 'add url to add image',
-            },
+            // pattern: {
+            //   value:
+            //     /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/,
+            //   message: 'add url to add image',
+            // },
           })}
         />
         {errors.image && <p role="alert">{errors.image.message}</p>}

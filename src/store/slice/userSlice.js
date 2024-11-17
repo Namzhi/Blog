@@ -7,7 +7,7 @@ import { fetchArticles } from './articleSlice'
 const initialState = {
   email: null,
   username: null,
-  token: null,
+  token: localStorage.getItem('token'),
   password: null,
   loading: false,
   error: false,
@@ -30,7 +30,7 @@ export const registerUser = createAsyncThunk('users/registerUser', async (user, 
 export const loginUser = createAsyncThunk('users/loginUser', async (user, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${api}users/login`, user)
-    console.log(response)
+    // console.log(response)
     const { token } = response.data.user
 
     // Сохраняем токен в localStorage
@@ -38,7 +38,7 @@ export const loginUser = createAsyncThunk('users/loginUser', async (user, { reje
     return response.data
   } catch (err) {
     console.error(err)
-    console.error(err.data.user)
+    // console.error(err.data.user)
     return rejectWithValue(err.response?.data || 'Failed to login') // Improved
     // error handling
   }
@@ -93,7 +93,7 @@ const userSlice = createSlice({
       localStorage.removeItem('token')
     },
     setUser(state, action) {
-      console.log(action)
+      // console.log(action)
       state.email = action.payload
     },
     removeUser(state) {
@@ -120,10 +120,10 @@ const userSlice = createSlice({
         state.bio = action.payload.user.bio || null
         state.image = action.payload.user.image || null
         state.loading = false
-        console.log(action.payload) // For debugging
+        // console.log(action.payload) // For debugging
       })
       .addCase(registerUser.rejected, (state, action) => {
-        console.error(action.payload, 'register rejected')
+        // console.error(action.payload, 'register rejected')
         state.error = true
         state.errorMessage = action.payload
         state.loading = false
@@ -142,10 +142,10 @@ const userSlice = createSlice({
         state.image = action.payload.user.image
         state.loading = false
 
-        console.log(action.payload) // For debugging
+        // console.log(action.payload) // For debugging
       })
       .addCase(loginUser.rejected, (state, action) => {
-        console.error(action.payload, 'login rejected')
+        // console.error(action.payload, 'login rejected')
         state.error = true
         state.loading = false
         state.errorMessage = action.payload
@@ -156,6 +156,7 @@ const userSlice = createSlice({
         state.image = action.payload.user.image
         state.email = action.payload.user.email
         state.password = action.payload.user.password
+        state.token = action.payload.user.token
 
         state.loading = false
 
@@ -179,7 +180,7 @@ const userSlice = createSlice({
         state.bio = action.payload.user.bio
         state.image = action.payload.user.image
         state.loading = false
-        console.log(action.payload) // For debugging
+        // console.log(action.payload) // For debugging
       })
       .addCase(editProfile.pending, (state) => {
         state.loading = true
@@ -187,7 +188,7 @@ const userSlice = createSlice({
         // console.log('pending edit')
       })
       .addCase(editProfile.rejected, (state, action) => {
-        console.error(action.payload, 'edit rejected')
+        // console.error(action.payload, 'edit rejected')
         // state.error = true
         state.loading = false
         // console.log('rejected edit')

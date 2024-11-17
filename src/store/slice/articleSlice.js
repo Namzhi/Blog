@@ -7,7 +7,9 @@ const initialState = {
   oneArticle: {},
   loading: false,
   error: false,
+  tags: [],
 }
+const api = 'https://blog-platform.kata.academy/api/'
 
 // console.log(fetchArticles)
 export const fetchArticles = createAsyncThunk('articles/getArticles', async (page, { rejectWithValue }) => {
@@ -29,6 +31,66 @@ export const fetchOneArticle = createAsyncThunk('articles/getOneArticle', async 
     return response
   } catch (err) {
     return rejectWithValue('The error occurred while fetching an article')
+  }
+})
+export const createArticle = createAsyncThunk('articles/createArticle', async (article, { rejectWithValue }) => {
+  const token = localStorage.getItem('token')
+
+  if (!token) {
+    return rejectWithValue('No token found')
+  }
+
+  try {
+    const response = await axios.post(`${api}articles`, article, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+    console.log(response.data)
+    return response.data
+  } catch (err) {
+    console.log('errrr', err)
+    return rejectWithValue(err.response?.data || 'Failed to create an article')
+  }
+})
+export const editArticle = createAsyncThunk('articles/:slug', async (article, { rejectWithValue }) => {
+  const token = localStorage.getItem('token')
+
+  if (!token) {
+    return rejectWithValue('No token found')
+  }
+  console.log(article.article)
+  try {
+    const response = await axios.put(`${api}articles/${article.article.slug}`, article, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+    console.log(response.data)
+    return response.data
+  } catch (err) {
+    console.log('errrr', err)
+    return rejectWithValue(err.response?.data || 'Failed to create an article')
+  }
+})
+export const deleteArticle = createAsyncThunk('articles/delete/:slug', async (slug, { rejectWithValue }) => {
+  const token = localStorage.getItem('token')
+
+  if (!token) {
+    return rejectWithValue('No token found')
+  }
+  console.log(slug)
+  try {
+    const response = await axios.delete(`${api}articles/${slug}`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+    console.log(response.data)
+    return response.data
+  } catch (err) {
+    console.log('errrr', err)
+    return rejectWithValue(err.response?.data || 'Failed to delete the article')
   }
 })
 const articleSlice = createSlice({

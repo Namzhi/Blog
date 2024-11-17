@@ -13,6 +13,6 @@ const Login = () => {
   const navigate = useNavigate()
   const { isAuth } = useAuth()
 
-  return !isAuth ? <FormLogin title="sign in" /> : <Navigate to={'/'} />
+  return isAuth ? <Navigate to={'/'} /> : <FormLogin title="sign in" />
 }
 export { Login }

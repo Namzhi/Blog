@@ -45,6 +45,8 @@
   &__tags {
     display: flex;
     & > li {
+      list-style: none;
+      margin-left: 0;
       font-size: 12px;
       font-weight: 400;
       line-height: 20px;

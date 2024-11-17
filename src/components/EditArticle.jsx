@@ -5,14 +5,14 @@ import React from 'react'
 import { useAuth } from '../hooks/use-auth'
 
 import { FormEdit } from './Form-edit'
+import { FormArticleEdit } from './Form-article-edit'
 
 // console.log(isAuth)
 // return isAuth ? <FormEdit title="sign in" /> : <Navigate to={'/login'} />
-const Profile = () => {
+const EditArticle = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { isAuth } = useAuth()
-  console.log(isAuth)
-  return <FormEdit title="edit" />
+  // console.log(isAuth)
+  return <FormArticleEdit title="editArticle" />
 }
-export { Profile }
+export { EditArticle }
