@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react'
 import Markdown from 'markdown-to-jsx'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, message, Popconfirm } from 'antd'
+import { message, Popconfirm } from 'antd'
 
-import { deleteArticle, fetchOneArticle } from '../store/slice/articleSlice'
+import { deleteArticle, fetchOneArticle, likeArticle, unlikeArticle } from '../store/slice/articleSlice'
 import './article-post.scss'
 import Spin from '../Spin'
+import { useArticle } from '../hooks/use-article'
 export default function ArticlePost() {
   let { slug } = useParams()
-  // console.log(useParams())
   const navigate = useNavigate()
-  useEffect(() => {
-    dispatch(fetchOneArticle(slug))
-  }, [])
+
   const dispatch = useDispatch()
   const error = useSelector((state) => state.article.error)
   const article = useSelector((state) => {
@@ -22,7 +20,9 @@ export default function ArticlePost() {
   console.log(error)
   const { author = 'no author', createdAt, description, favorited, favoritesCount, tagList, title, updatedAt } = article
   console.log(article)
-
+  useEffect(() => {
+    dispatch(fetchOneArticle(slug))
+  }, [])
   function handleEdit() {
     navigate(`/articles/${slug}/edit`)
   }
@@ -30,13 +30,22 @@ export default function ArticlePost() {
   function handleDelete() {
     dispatch(deleteArticle(slug))
   }
-  const confirm = (e) => {
-    console.log(e)
-    message.success('Click on Yes')
-  }
+
   const cancel = (e) => {
     console.log(e)
     message.error('Click on No')
+  }
+  function handleLike(e) {
+    // console.log(e.target)
+    // const heartIcon = e.target
+
+    if (!favorited) {
+      // heartIcon.classList.add('article-item__like-icon--clicked')
+      dispatch(likeArticle(slug))
+    } else {
+      // heartIcon.classList.remove('article-item__like-icon--clicked')
+      dispatch(unlikeArticle(slug))
+    }
   }
   return (
     <>
@@ -45,19 +54,22 @@ export default function ArticlePost() {
       <div className="article-item__wrapper article-post__body">
         <div className="article-item__header">
           <div className="article-item__title-tags-wrapper">
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
             <div className="article-item__title" role="presentation">
               {title}
             </div>
-            <div className="article-item__tags">
-              {tagList
-                ? // <ul>
-                  tagList.map((el, i) => <li key={i}>{el}</li>)
-                : // </ul>
-                  null}
-            </div>
+            <div className="article-item__tags">{tagList ? tagList.map((el, i) => <li key={i}>{el}</li>) : null}</div>
           </div>
-          <div className="article-item__likes">{favoritesCount}</div>
+          <div
+            // src={heart}
+            // alt=""
+            className={`article-item__like-icon ${favorited ? 'article-item__like-icon--clicked' : null}`}
+            onClick={handleLike}
+            role="presentation"
+          />
+          <div className="article-item__likes" role="presentation">
+            {favoritesCount}
+            {/*{propsFavcount}*/}
+          </div>
 
           <div className="article-item__profile">
             <div className="article-item__name">{author.username}</div>

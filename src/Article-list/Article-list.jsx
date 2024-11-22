@@ -24,14 +24,11 @@ export const ArticleList = (props) => {
     return state.user.loading
   })
   const error = useSelector((state) => state.article.error)
-  // const isLoading = useSelector((state) => state.s)
-  // const [pageQty, setPageQty] = useState(1)
   useEffect(() => {
-    // console.log(page)
     dispatch(fetchArticles(page))
   }, [page])
 
-  const arr = articles.map((res, i) => <ArticleItem key={uniqid()} props={res} />)
+  const arr = articles.map((res, i) => <ArticleItem key={uniqid()} props={res} index={i} />)
   return (
     <div className="article-list__wrapper">
       {error && <div className={'error-message'}>{error}</div>}

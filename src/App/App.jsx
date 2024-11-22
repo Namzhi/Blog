@@ -1,63 +1,45 @@
-import { useRoutes, Route, Routes, BrowserRouter, useNavigate, Navigate } from 'react-router-dom'
+import { useRoutes, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-import HomePage from '../HomePage'
-import LoginPage from '../LoginPage'
-import RegisterPage from '../RegisterPage'
 import ArticlePost from '../Article-post/Article-post'
 import './App.scss'
 import { ArticleList } from '../Article-list/Article-list'
-import profileImage from '../images/profile.svg'
-import { PrivateRoute } from '../components/Private-route'
-
-// eslint-disable-next-line import/order
-import axios from 'axios'
+import profileImage from '../assets/images/profile.svg'
+import { PrivateRoute } from '../Private-route'
 import { useAuth } from '../hooks/use-auth'
 import { useProfile } from '../hooks/use-profile'
-import { authUser, editProfile, logout, removeUser } from '../store/slice/userSlice'
-
-// eslint-disable-next-line import/order
-import { useDispatch, useSelector } from 'react-redux'
-import Spin from '../Spin'
-import ProfilePage from '../ProfilePage'
-import { Profile } from '../components/Profile'
-import { NewArticle } from '../components/NewArticle'
-import { createArticle } from '../store/slice/articleSlice'
-import { EditArticle } from '../components/EditArticle'
+import { authUser, logout } from '../store/slice/userSlice'
+import { NewArticle } from '../New-article/NewArticle'
+import { EditArticle } from '../Edit-article/Edit-article'
+import { EditProfile } from '../Edit-profile/Edit-profile'
+import { RegisterForm } from '../Register-form/Register-form'
+import { LoginForm } from '../Login-form/Login-form'
 
 export const App = () => {
-  const articleListElement = <ArticleList />
   const navigate = useNavigate()
-
   const dispatch = useDispatch()
-  // const profile = <ProfilePage />
-
+  const { isAuth, isLoading } = useAuth()
+  const { username, image } = useProfile()
   useEffect(() => {
     dispatch(authUser())
-    // console.log('isAuth', isAuth)
   }, [dispatch])
-  const { isAuth, isLoading } = useAuth()
-  // const PrivateRoute = ({ children }) => {
-  // console.log(isAuth)
-  //   return !isAuth ? <Navigate to="/login" /> : children
-  // }
 
   const AppRoutes = () =>
     useRoutes([
       { path: '/', element: <ArticleList /> },
       { path: '/articles', element: <ArticleList /> },
       { path: '/articles/:slug', element: <ArticlePost /> },
-
       {
         path: '/login',
-        element: <LoginPage />,
+        element: <LoginForm />,
       },
-      { path: '/register', element: <RegisterPage /> },
+      { path: '/register', element: <RegisterForm /> },
       {
         path: '/profile',
         element: (
           <PrivateRoute>
-            <Profile />
+            <EditProfile />
           </PrivateRoute>
         ),
       },
@@ -84,27 +66,11 @@ export const App = () => {
   const handleProfile = () => {
     navigate('/profile')
   }
-  const handleNavigate = (nav) => {
-    navigate(nav)
-  }
-
-  const { username, image } = useProfile()
 
   function handleCreateArticle() {
     navigate('/new-article')
-    // dispatch(
-    //   createArticle({
-    //     article: {
-    //       title: 'string',
-    //       description: 'string',
-    //       body: 'string',
-    //       tags: ['string'],
-    //     },
-    //   })
-    // )
   }
 
-  // console.log('isAuth', isAuth)
   return (
     <div className="App__wrapper">
       <div className="App__header">
@@ -130,7 +96,6 @@ export const App = () => {
               </button>
             </>
           ) : (
-            // isLoading ? null : !isAuth ?
             <>
               <button className="App__sign-in" onClick={() => navigate('/login')}>
                 Sign in
@@ -141,10 +106,6 @@ export const App = () => {
             </>
           )}
         </div>
-        {/*) : (*/}
-        {/*<div className="App__button-wrapper">*/}
-        {/*</div>*/}
-        {/*)}*/}
       </div>
       <AppRoutes />
     </div>

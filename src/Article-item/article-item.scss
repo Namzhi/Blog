@@ -13,6 +13,7 @@
   &__header {
     height: 67px;
     display: flex;
+    flex-wrap: wrap;
   }
 
   &__title-tags-wrapper {
@@ -28,20 +29,32 @@
     line-height: 28px;
     text-align: left;
     color: #1890ff;
+    //width: 50%;
   }
 
   &__likes {
+    display: inline-block;
     width: 34px;
     height: 22px;
     margin-left: 13px;
-    &::before {
-      display: inline-block;
-      content: url('../images/heart.svg');
-      transform: translateY(2px);
-      margin-right: 5px;
-    }
+    //&::before {
+    //  display: inline-block;
+    //  content: url('../assets/images/heart.svg');
+    //  transform: translateY(2px);
+    //  margin-right: 5px;
+    //}
   }
-
+  &__like-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    content: url('../assets/images/heart.svg');
+    //transform: translate(0px, 5px);
+  }
+  &__like-icon--clicked {
+    content: url('../assets/images/likedHeart.svg');
+    fill: #ff0000;
+  }
   &__tags {
     display: flex;
     & > li {

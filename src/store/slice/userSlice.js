@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-
-import { fetchArticles } from './articleSlice'
 
 const initialState = {
   email: null,
@@ -15,6 +12,7 @@ const initialState = {
   err: '',
   isAuth: false,
   image: null,
+  isSave: null,
 }
 const api = 'https://blog-platform.kata.academy/api/'
 export const registerUser = createAsyncThunk('users/registerUser', async (user, { rejectWithValue }) => {
@@ -30,17 +28,14 @@ export const registerUser = createAsyncThunk('users/registerUser', async (user, 
 export const loginUser = createAsyncThunk('users/loginUser', async (user, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${api}users/login`, user)
-    // console.log(response)
     const { token } = response.data.user
 
-    // Сохраняем токен в localStorage
     localStorage.setItem('token', token)
     return response.data
   } catch (err) {
     console.error(err)
-    // console.error(err.data.user)
-    return rejectWithValue(err.response?.data || 'Failed to login') // Improved
-    // error handling
+    return rejectWithValue(err.response.status === 422 ? 'Login or password' + ' is' + ' not valid' : 'Failed to login') // Improved
+    // Improved
   }
 })
 export const authUser = createAsyncThunk('users/authUser', async (_, { rejectWithValue }) => {
@@ -77,7 +72,7 @@ export const editProfile = createAsyncThunk('users/editProfile', async (user, { 
     return response.data
   } catch (err) {
     console.log('errrr', err)
-    return rejectWithValue(err.response?.data || 'Failed to edit the profile')
+    return rejectWithValue(err.response.status === 422 ? 'Login or email is' + ' not valid' : 'Failed to edit') // Improved
   }
 })
 const userSlice = createSlice({
@@ -107,10 +102,11 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Register user cases
+      // Register-form user cases
       .addCase(registerUser.pending, (state) => {
         state.loading = true
         state.error = false
+        state.errorMessage = null
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.username = action.payload.user.username
@@ -120,6 +116,7 @@ const userSlice = createSlice({
         state.bio = action.payload.user.bio || null
         state.image = action.payload.user.image || null
         state.loading = false
+        state.errorMessage = null
         // console.log(action.payload) // For debugging
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -128,10 +125,11 @@ const userSlice = createSlice({
         state.errorMessage = action.payload
         state.loading = false
       })
-      // Login user cases
+      // Login-form user cases
       .addCase(loginUser.pending, (state) => {
         state.loading = true
         state.error = false
+        state.errorMessage = null
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.username = action.payload.user.username
@@ -141,7 +139,7 @@ const userSlice = createSlice({
         state.bio = action.payload.user.bio
         state.image = action.payload.user.image
         state.loading = false
-
+        state.errorMessage = null
         // console.log(action.payload) // For debugging
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -180,20 +178,22 @@ const userSlice = createSlice({
         state.bio = action.payload.user.bio
         state.image = action.payload.user.image
         state.loading = false
+        state.isSave = true
+        state.errorMessage = false
+
         // console.log(action.payload) // For debugging
       })
       .addCase(editProfile.pending, (state) => {
         state.loading = true
         state.error = false
+        state.isSave = false
+        state.errorMessage = false
         // console.log('pending edit')
       })
       .addCase(editProfile.rejected, (state, action) => {
-        // console.error(action.payload, 'edit rejected')
-        // state.error = true
         state.loading = false
-        // console.log('rejected edit')
-
-        // state.errorMessage = action.payload
+        state.isSave = false
+        state.errorMessage = action.payload
       })
   },
 })
