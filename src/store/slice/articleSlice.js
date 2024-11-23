@@ -17,6 +17,7 @@ const initialState = {
   favoritesCount: null,
   favorited: null,
   updatedArticle: null,
+  isDeleted: false,
 }
 const api = 'https://blog-platform.kata.academy/api/'
 const token = localStorage.getItem('token')
@@ -152,6 +153,7 @@ const articleSlice = createSlice({
       state.loading = false
       state.error = false
       state.isCreated = false
+      state.isDeleted = false
     })
     builder.addCase(fetchArticles.rejected, (state, action) => {
       state.articles = []
@@ -189,7 +191,7 @@ const articleSlice = createSlice({
       state.loading = false
       state.error = false
       state.errorMessage = false
-
+      state.isDeleted = false
       state.isCreated = true
     })
     builder.addCase(createArticle.rejected, (state, action) => {
@@ -223,6 +225,7 @@ const articleSlice = createSlice({
       state.error = false
       state.errorMessage = false
       state.isSave = true
+      state.isDeleted = false
     })
     builder.addCase(editArticle.rejected, (state, action) => {
       state.error = action.payload
