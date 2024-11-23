@@ -119,6 +119,7 @@ export const unlikeArticle = createAsyncThunk('articles/:slug/unlike', async (sl
   }
 })
 export const deleteArticle = createAsyncThunk('articles/delete/:slug', async (slug, { rejectWithValue }) => {
+  const token = localStorage.getItem('token')
   if (!token) {
     return rejectWithValue('No token found')
   }
