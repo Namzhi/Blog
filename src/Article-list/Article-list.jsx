@@ -8,26 +8,23 @@ import { fetchArticles } from '../store/slice/articleSlice'
 import { ArticleItem } from '../Article-item/Article-item'
 import './article-list.scss'
 import Spin from '../Spin'
+import { useArticle } from '../hooks/use-article'
 
 export const ArticleList = (props) => {
   const dispatch = useDispatch()
+
   const [searchParams] = useSearchParams()
   const initialPage = parseInt(searchParams.get('page')) || 1
   const [page, setPage] = useState(initialPage)
-  const articles = useSelector((state) => {
-    return state.article.articles
-  })
-  const pageQty = useSelector((state) => {
-    return Math.floor(state.article.articlesCount / 5) + 1
-  })
-  const isLoading = useSelector((state) => {
-    return state.user.loading
-  })
-  const error = useSelector((state) => state.article.error)
   useEffect(() => {
     dispatch(fetchArticles(page))
   }, [page])
+  const articles = useSelector((state) => {
+    return state.article.articles
+  })
 
+  const { isLoading, error, articlesCount } = useArticle()
+  const pageQty = Math.floor(articlesCount / 5) + 1
   const arr = articles.map((res, i) => <ArticleItem key={uniqid()} props={res} index={i} />)
   return (
     <div className="article-list__wrapper">
@@ -35,18 +32,23 @@ export const ArticleList = (props) => {
       {isLoading ? <Spin /> : <ul className="article-list">{arr}</ul>}
 
       {!!pageQty && (
-        <Pagination
-          count={pageQty}
-          page={page}
-          onChange={(_, num) => {
-            console.log(num)
-            setPage(num)
-          }}
-          showFirstButton
-          showLastButton
-          sx={{ marginY: 3, marginX: 'auto' }}
-          renderItem={(item) => <PaginationItem component={NavLink} to={`/?page=${item.page}`} {...item} />}
-        />
+        <Stack alignItems="center">
+          <Pagination
+            count={pageQty}
+            page={page}
+            onChange={(_, num) => {
+              console.log(num)
+              setPage(num)
+            }}
+            showFirstButton
+            showLastButton
+            sx={{ marginY: 3, marginX: 'auto' }}
+            color="primary"
+            shape="rounded"
+            // margin="auto"
+            renderItem={(item) => <PaginationItem component={NavLink} to={`/?page=${item.page}`} {...item} />}
+          />
+        </Stack>
       )}
     </div>
   )

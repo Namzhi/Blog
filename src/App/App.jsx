@@ -6,8 +6,7 @@ import ArticlePost from '../Article-post/Article-post'
 import './App.scss'
 import { ArticleList } from '../Article-list/Article-list'
 import profileImage from '../assets/images/profile.svg'
-import { PrivateRoute } from '../Private-route'
-import { useAuth } from '../hooks/use-auth'
+import { PrivateRoute } from '../Private-route/Private-route'
 import { useProfile } from '../hooks/use-profile'
 import { authUser, logout } from '../store/slice/userSlice'
 import { NewArticle } from '../New-article/NewArticle'
@@ -19,8 +18,8 @@ import { LoginForm } from '../Login-form/Login-form'
 export const App = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isAuth, isLoading } = useAuth()
-  const { username, image } = useProfile()
+  const { isAuth, isLoading, username, image } = useProfile()
+
   useEffect(() => {
     dispatch(authUser())
   }, [dispatch])

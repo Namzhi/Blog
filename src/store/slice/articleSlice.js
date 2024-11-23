@@ -160,10 +160,10 @@ const articleSlice = createSlice({
   name: 'article',
   initialState,
   reducers: {
-    setLikes(state, action) {
-      // console.log(action)
-      state.favorited = action.payload.favorited
-      state.favoritesCount = action.payload.favoritesCount
+    deleteError(state) {
+      console.log(2344)
+      state.error = null
+      state.errorMessage = null
     },
   },
   extraReducers: (builder) => {
@@ -224,6 +224,25 @@ const articleSlice = createSlice({
       state.loading = false
       state.errorMessage = action.payload
       state.isCreated = false
+    })
+
+    builder.addCase(deleteArticle.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = false
+      state.errorMessage = false
+
+      state.isCreated = true
+    })
+    builder.addCase(deleteArticle.rejected, (state, action) => {
+      state.error = action.payload
+      state.loading = false
+      state.errorMessage = action.payload
+      state.isCreated = false
+      // return (dispatch) => {
+      //   setTimeout(() => {
+      //     console.log(123)
+      //   }, 2000)
+      // }
     })
     builder.addCase(editArticle.pending, (state, action) => {
       state.loading = true
@@ -293,6 +312,6 @@ const articleSlice = createSlice({
   },
 })
 
-// export const { deleteData } = articleSlice.actions
-
+export const { deleteError } = articleSlice.actions
+console.log(deleteError)
 export default articleSlice.reducer

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   loading: false,
-  error: null,
+  errorPop: null,
 }
 const appSlice = createSlice({
   name: 'app',
@@ -14,10 +14,15 @@ const appSlice = createSlice({
       state.loading = false
     },
     errorOn(state, action) {
-      state.error = true
+      state.errorPop = action.payload
+
+      setTimeout(() => {
+        console.log(123)
+        state.errorPop = 'sdfsdf'
+      }, 2000)
     },
     errorOff(state, action) {
-      state.error = false
+      state.errorPop = 'sdfsdf'
     },
   },
 })

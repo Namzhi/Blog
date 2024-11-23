@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Markdown from 'markdown-to-jsx'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { message, Popconfirm } from 'antd'
+import { format } from 'date-fns'
 
-import { deleteArticle, fetchOneArticle, likeArticle, unlikeArticle } from '../store/slice/articleSlice'
+import { deleteArticle, deleteError, fetchOneArticle, likeArticle, unlikeArticle } from '../store/slice/articleSlice'
 import './article-post.scss'
 import Spin from '../Spin'
-import { useArticle } from '../hooks/use-article'
+
 export default function ArticlePost() {
   let { slug } = useParams()
   const navigate = useNavigate()
@@ -17,33 +18,38 @@ export default function ArticlePost() {
   const article = useSelector((state) => {
     return state.article.oneArticle
   })
-  console.log(error)
+  const isAuth = useSelector((state) => !!state.user.token)
   const { author = 'no author', createdAt, description, favorited, favoritesCount, tagList, title, updatedAt } = article
-  console.log(article)
   useEffect(() => {
     dispatch(fetchOneArticle(slug))
   }, [])
   function handleEdit() {
     navigate(`/articles/${slug}/edit`)
   }
-
+  useEffect(() => {
+    dispatch(fetchOneArticle(slug))
+  }, [])
   function handleDelete() {
     dispatch(deleteArticle(slug))
+    if (!isAuth) {
+      navigate('/login')
+    }
+    setTimeout(() => {
+      dispatch(deleteError())
+    }, 2000)
   }
-
+  //
+  // const errorPop = useSelector((state) => state.app.errorPop)
+  // console.log(errorPop)
   const cancel = (e) => {
     console.log(e)
     message.error('Click on No')
+    // dispatch(errorOn(error))
   }
   function handleLike(e) {
-    // console.log(e.target)
-    // const heartIcon = e.target
-
     if (!favorited) {
-      // heartIcon.classList.add('article-item__like-icon--clicked')
       dispatch(likeArticle(slug))
     } else {
-      // heartIcon.classList.remove('article-item__like-icon--clicked')
       dispatch(unlikeArticle(slug))
     }
   }
@@ -60,41 +66,42 @@ export default function ArticlePost() {
             <div className="article-item__tags">{tagList ? tagList.map((el, i) => <li key={i}>{el}</li>) : null}</div>
           </div>
           <div
-            // src={heart}
-            // alt=""
             className={`article-item__like-icon ${favorited ? 'article-item__like-icon--clicked' : null}`}
             onClick={handleLike}
             role="presentation"
           />
           <div className="article-item__likes" role="presentation">
             {favoritesCount}
-            {/*{propsFavcount}*/}
           </div>
 
           <div className="article-item__profile">
             <div className="article-item__name">{author.username}</div>
-            <div className="article-item__date">{createdAt}</div>
+            <div className="article-item__date">{createdAt ? format(createdAt, 'MMMM' + ' dd, yyyy') : createdAt}</div>
             <div className="article-item__photo">
               <img src={author.image} alt="profile avatar" className="" />
             </div>
           </div>
         </div>
-        <div className="article-item__description ">{article.description}</div>
-        <Popconfirm
-          title="Delete the task"
-          description="Are you sure to delete this task?"
-          onConfirm={handleDelete}
-          onCancel={cancel}
-          okText="Yes"
-          cancelText="No"
-        >
-          <button className="article-post__delete">Delete</button>
-        </Popconfirm>
+        <div className="article-post__description-button-wrapper">
+          <div className="article-item__description ">{article.description}</div>
+          <div className="article-post__button-wrapper">
+            <Popconfirm
+              title="Delete the task"
+              description="Are you sure to delete this task?"
+              onConfirm={handleDelete}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <button className="article-post__delete">Delete</button>
+            </Popconfirm>
 
-        <button className="article-post__edit" onClick={handleEdit}>
-          Edit
-        </button>
-        <div className="article-item__description ">
+            <button className="article-post__edit" onClick={handleEdit}>
+              Edit
+            </button>
+          </div>
+        </div>
+        <div className="article-post__body">
           <Markdown>{article.body}</Markdown>
         </div>
       </div>

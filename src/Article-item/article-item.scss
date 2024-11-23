@@ -2,7 +2,7 @@
   &__wrapper {
     width: 938px;
     height: 140px;
-
+    font-family: 'Inter-UI', serif;
     border-radius: 5px;
     background: #ffffff;
 
@@ -24,11 +24,15 @@
   &__title {
     //styleName: H5 - Header 5;
     //font-family: 'Inter-UI', serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 28px;
-    text-align: left;
-    color: #1890ff;
+    & a {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      text-align: left;
+      color: #1890ff;
+      text-decoration: none;
+    }
+    margin-bottom: 4px;
     //width: 50%;
   }
 
@@ -36,7 +40,8 @@
     display: inline-block;
     width: 34px;
     height: 22px;
-    margin-left: 13px;
+    margin-left: 5px;
+
     //&::before {
     //  display: inline-block;
     //  content: url('../assets/images/heart.svg');
@@ -49,7 +54,8 @@
     width: 16px;
     height: 16px;
     content: url('../assets/images/heart.svg');
-    //transform: translate(0px, 5px);
+    margin-left: 13px;
+    transform: translate(0px, 2px);
   }
   &__like-icon--clicked {
     content: url('../assets/images/likedHeart.svg');
@@ -85,17 +91,37 @@
   }
 
   &__name {
+    //styleName: H6 - Header 6;
+
+    font-size: 18px;
+    line-height: 28px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
   }
 
   &__date {
+    font-size: 12px;
+    line-height: 22px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #00000080;
   }
 
   &__photo {
     width: 46px;
     height: 46px;
     margin-left: 12px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
     & > img {
       width: 100%;
+      height: auto;
+      margin: auto;
+      //object-fit: cover;
     }
   }
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 import { createArticle } from './store/slice/articleSlice'
-import { useAuth } from './hooks/use-auth'
+import { useProfile } from './hooks/use-profile'
 import './Article-form/Article-form.scss'
 export const ArticleForm = ({ title }) => {
   const dispatch = useDispatch()
@@ -43,7 +43,7 @@ export const ArticleForm = ({ title }) => {
       })
     )
   }
-  const { isAuth, errorMessage } = useAuth() // Проверяем статус авторизации
+  const { isAuth, errorMessage } = useProfile() // Проверяем статус авторизации
 
   return (
     <div className="register-form__wrapper article-form__wrapper">

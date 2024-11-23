@@ -3,15 +3,14 @@ import { useDispatch } from 'react-redux'
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { useAuth } from '../hooks/use-auth'
 import { useProfile } from '../hooks/use-profile'
 import { editProfile } from '../store/slice/userSlice'
 
-export const EditProfile = ({ title }) => {
+export const EditProfile = () => {
   const dispatch = useDispatch()
 
-  const { isAuth, errorMessage } = useAuth() // Проверяем статус авторизации
-  const { username, email, password, image, isSave } = useProfile()
+  const { isAuth, errorMessage, username, email, image, isSave } = useProfile() // Проверяем статус авторизации
+
   const {
     register,
     formState: { errors },

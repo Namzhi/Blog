@@ -4,12 +4,12 @@ import { Link, Navigate } from 'react-router-dom'
 import React from 'react'
 
 import './register-form.scss'
-import { useAuth } from '../hooks/use-auth'
+import { useProfile } from '../hooks/use-profile'
 import { registerUser } from '../store/slice/userSlice'
 
 export const RegisterForm = ({ title }) => {
   const dispatch = useDispatch()
-  const { isAuth, errorMessage } = useAuth() // Проверяем статус авторизации
+  const { isAuth, errorMessage } = useProfile() // Проверяем статус авторизации
   const {
     register,
     formState: { errors },

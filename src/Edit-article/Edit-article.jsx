@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ const EditArticle = () => {
   let { slug } = useParams()
   // console.log(data)
   const dispatch = useDispatch()
-  const onSubmit = (data) => {
+  const onSubmit = useCallback((data) => {
     dispatch(
       editArticle({
         article: {
@@ -21,7 +21,7 @@ const EditArticle = () => {
         },
       })
     )
-  }
+  }, [])
   return <ArticleForm title="Edit article" onSubmit={onSubmit} message="Edited successfully!" />
 }
 export { EditArticle }

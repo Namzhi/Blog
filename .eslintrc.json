@@ -30,7 +30,7 @@
     "quotes": ["error", "single"],
     "semi": "off",
     "react/react-in-jsx-scope": "off",
-    "react/prop-types": 0,
+    "react/prop-types": "off",
     "indent": "off",
     "import/no-unresolved": [
       2,

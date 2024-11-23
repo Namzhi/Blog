@@ -1,19 +1,24 @@
+import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
 export function useArticle() {
-  const { title, description, body, tags, errorMessage, isSave, isCreated, favorited, favoritesCount } = useSelector(
-    (state) => state.article
+  const articleState = useSelector((state) => state.article)
+
+  return useMemo(
+    () => ({
+      titleDefault: articleState.title,
+      description: articleState.description,
+      body: articleState.body,
+      tags: articleState.tags,
+      errorMessage: articleState.errorMessage,
+      isSave: articleState.isSave,
+      isCreated: articleState.isCreated,
+      favorited: articleState.favorited,
+      favoritesCount: articleState.favoritesCount,
+      isLoading: articleState.loading,
+      error: articleState.error,
+      articlesCount: articleState.articlesCount,
+    }),
+    [articleState]
   )
-  console.log(favoritesCount)
-  return {
-    titleDefault: title,
-    description: description,
-    body: body,
-    tags: tags,
-    errorMessage: errorMessage,
-    isSave: isSave,
-    isCreated: isCreated,
-    favorited: favorited,
-    favoritesCount: favoritesCount,
-  }
 }

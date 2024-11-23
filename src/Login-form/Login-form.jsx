@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, Navigate } from 'react-router-dom'
 import React from 'react'
 
-import { useAuth } from '../hooks/use-auth'
+import { useProfile } from '../hooks/use-profile'
 import { loginUser, setUser } from '../store/slice/userSlice'
 import './login-form.scss'
 export const LoginForm = ({ title }) => {
   const dispatch = useDispatch()
-  const { isAuth, errorMessage } = useAuth() // Проверяем статус авторизации
+  const { isAuth, errorMessage } = useProfile() // Проверяем статус авторизации
   const prevEmail = useSelector((state) => state.user.email)
   const {
     register,
@@ -23,7 +23,6 @@ export const LoginForm = ({ title }) => {
   })
 
   const onSubmit = (data) => {
-    // console.log(prevEmail)
     dispatch(
       loginUser({
         user: {
@@ -80,8 +79,6 @@ export const LoginForm = ({ title }) => {
           />
           {!errors.password && errors.password && <p role="alert">{errors.password.message}</p>}
         </label>
-
-        {/*<input type="checkbox">I agree to the processing of my personal information</input>*/}
 
         <button className="register-form__button register-form__button--margin-top" type="submit">
           Login

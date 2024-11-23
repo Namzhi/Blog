@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom'
 
-import { useAuth } from './hooks/use-auth'
+import { useProfile } from '../hooks/use-profile'
 
 const PrivateRoute = ({ children }) => {
-  const { isAuth } = useAuth()
+  const { isAuth } = useProfile()
 
   return isAuth ? children : <Navigate to="/login" />
 }
