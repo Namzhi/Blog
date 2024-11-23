@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { Link as NavLink, useSearchParams } from 'react-router-dom'
-import { Pagination, PaginationItem, TextField, Stack, Link } from '@mui/material'
+import { Pagination, PaginationItem, Stack } from '@mui/material'
 import uniqid from 'uniqid'
 
 import { fetchArticles } from '../store/slice/articleSlice'
@@ -10,7 +10,7 @@ import './article-list.scss'
 import Spin from '../Spin'
 import { useArticle } from '../hooks/use-article'
 
-export const ArticleList = (props) => {
+export const ArticleList = () => {
   const dispatch = useDispatch()
 
   const [searchParams] = useSearchParams()
@@ -18,7 +18,7 @@ export const ArticleList = (props) => {
   const [page, setPage] = useState(initialPage)
   useEffect(() => {
     dispatch(fetchArticles(page))
-  }, [page])
+  }, [dispatch, page])
   const articles = useSelector((state) => {
     return state.article.articles
   })
@@ -37,7 +37,6 @@ export const ArticleList = (props) => {
             count={pageQty}
             page={page}
             onChange={(_, num) => {
-              console.log(num)
               setPage(num)
             }}
             showFirstButton
@@ -45,7 +44,6 @@ export const ArticleList = (props) => {
             sx={{ marginY: 3, marginX: 'auto' }}
             color="primary"
             shape="rounded"
-            // margin="auto"
             renderItem={(item) => <PaginationItem component={NavLink} to={`/?page=${item.page}`} {...item} />}
           />
         </Stack>
