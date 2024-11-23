@@ -1,17 +1,17 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import './article-item.scss'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { format } from 'date-fns'
 
 import { likeArticle, unlikeArticle } from '../store/slice/articleSlice'
 
 // eslint-disable-next-line react/display-name
-export const ArticleItem = memo(({ props, index }) => {
-  const { author, createdAt, description, slug, tagList, title, updatedAt, favorited, favoritesCount } = props
+export const ArticleItem = memo(({ props }) => {
+  const { author, createdAt, description, slug, tagList, title, favorited, favoritesCount } = props
   const dispatch = useDispatch()
 
-  function handleLike(e) {
+  function handleLike() {
     if (!favorited) {
       dispatch(likeArticle(slug))
     } else if (favorited) {

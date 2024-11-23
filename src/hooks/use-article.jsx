@@ -12,6 +12,7 @@ export function useArticle() {
       tags: articleState.tags,
       errorMessage: articleState.errorMessage,
       isSave: articleState.isSave,
+      isDeleted: articleState.isDeleted,
       isCreated: articleState.isCreated,
       favorited: articleState.favorited,
       favoritesCount: articleState.favoritesCount,

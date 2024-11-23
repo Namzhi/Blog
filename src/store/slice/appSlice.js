@@ -7,22 +7,17 @@ const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    loaderOn(state, action) {
+    loaderOn(state) {
       state.loading = true
     },
-    loaderOff(state, action) {
+    loaderOff(state) {
       state.loading = false
     },
     errorOn(state, action) {
       state.errorPop = action.payload
-
-      setTimeout(() => {
-        console.log(123)
-        state.errorPop = 'sdfsdf'
-      }, 2000)
     },
-    errorOff(state, action) {
-      state.errorPop = 'sdfsdf'
+    errorOff(state) {
+      state.errorPop = null
     },
   },
 })

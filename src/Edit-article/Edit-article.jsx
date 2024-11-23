@@ -7,21 +7,23 @@ import { ArticleForm } from '../Article-form/Article-form'
 
 const EditArticle = () => {
   let { slug } = useParams()
-  // console.log(data)
   const dispatch = useDispatch()
-  const onSubmit = useCallback((data) => {
-    dispatch(
-      editArticle({
-        article: {
-          title: data.title,
-          slug: slug,
-          description: data.description,
-          body: data.body,
-          tagList: data.tags.filter((el) => !!el),
-        },
-      })
-    )
-  }, [])
+  const onSubmit = useCallback(
+    (data) => {
+      dispatch(
+        editArticle({
+          article: {
+            title: data.title,
+            slug: slug,
+            description: data.description,
+            body: data.body,
+            tagList: data.tags.filter((el) => !!el),
+          },
+        })
+      )
+    },
+    [dispatch, slug]
+  )
   return <ArticleForm title="Edit article" onSubmit={onSubmit} message="Edited successfully!" />
 }
 export { EditArticle }

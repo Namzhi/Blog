@@ -24,7 +24,6 @@ export const EditProfile = () => {
   })
 
   const onSubmit = (data) => {
-    console.log(data)
     dispatch(
       editProfile({
         user: {

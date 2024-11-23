@@ -6,7 +6,7 @@ import React from 'react'
 import { useProfile } from '../hooks/use-profile'
 import { loginUser, setUser } from '../store/slice/userSlice'
 import './login-form.scss'
-export const LoginForm = ({ title }) => {
+export const LoginForm = () => {
   const dispatch = useDispatch()
   const { isAuth, errorMessage } = useProfile() // Проверяем статус авторизации
   const prevEmail = useSelector((state) => state.user.email)
@@ -14,7 +14,6 @@ export const LoginForm = ({ title }) => {
     register,
     formState: { errors },
     handleSubmit,
-    watch,
   } = useForm({
     defaultValues: {
       email: prevEmail,

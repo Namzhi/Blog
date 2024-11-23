@@ -1,11 +1,6 @@
 .App {
   &__wrapper {
-    //width: 1440px;
     min-height: 100vh;
-    //top: -512px;
-    //left: -721px;
-    //gap: 0px;
-    //opacity: 0px;
     background: #ebeef3;
     font-family: 'Inter-UI', serif;
 
@@ -20,8 +15,6 @@
     justify-content: space-between;
   }
   &__button-wrapper {
-    //styleName: H6 - Header 6;
-    //margin-top: 16px;
     margin-right: 22px;
     display: flex;
     align-items: center;
@@ -51,14 +44,12 @@
     background-color: transparent;
   }
   &__name {
-    //width: 147px;
     height: 56px;
     padding: 1em 0 1em 0;
 
     & > span {
       display: block;
       margin: 9px 0 0 22px;
-      //vertical-align: middle;
     }
     &:hover {
       cursor: pointer;
@@ -77,7 +68,6 @@
   }
 }
 .profile {
-  //width: 140px;
   height: 46px;
   display: flex;
   &__name {

@@ -33,7 +33,6 @@ export const loginUser = createAsyncThunk('users/loginUser', async (user, { reje
     localStorage.setItem('token', token)
     return response.data
   } catch (err) {
-    console.error(err)
     return rejectWithValue(err.response.status === 422 ? 'Login or password' + ' is' + ' not valid' : 'Failed to login') // Improved
     // Improved
   }
@@ -68,10 +67,8 @@ export const editProfile = createAsyncThunk('users/editProfile', async (user, { 
         Authorization: `Token ${token}`,
       },
     })
-    // console.log(response.data)
     return response.data
   } catch (err) {
-    console.log('errrr', err)
     return rejectWithValue(err.response.status === 422 ? 'Login or email is' + ' not valid' : 'Failed to edit') // Improved
   }
 })
@@ -88,7 +85,6 @@ const userSlice = createSlice({
       localStorage.removeItem('token')
     },
     setUser(state, action) {
-      // console.log(action)
       state.email = action.payload
     },
     removeUser(state) {
@@ -102,7 +98,6 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Register-form user cases
       .addCase(registerUser.pending, (state) => {
         state.loading = true
         state.error = false
@@ -117,15 +112,12 @@ const userSlice = createSlice({
         state.image = action.payload.user.image || null
         state.loading = false
         state.errorMessage = null
-        // console.log(action.payload) // For debugging
       })
       .addCase(registerUser.rejected, (state, action) => {
-        // console.error(action.payload, 'register rejected')
         state.error = true
         state.errorMessage = action.payload
         state.loading = false
       })
-      // Login-form user cases
       .addCase(loginUser.pending, (state) => {
         state.loading = true
         state.error = false
@@ -140,10 +132,8 @@ const userSlice = createSlice({
         state.image = action.payload.user.image
         state.loading = false
         state.errorMessage = null
-        // console.log(action.payload) // For debugging
       })
       .addCase(loginUser.rejected, (state, action) => {
-        // console.error(action.payload, 'login rejected')
         state.error = true
         state.loading = false
         state.errorMessage = action.payload
@@ -157,18 +147,13 @@ const userSlice = createSlice({
         state.token = action.payload.user.token
 
         state.loading = false
-
-        // console.log(action.payload) // For debugging
       })
       .addCase(authUser.pending, (state) => {
         state.loading = true
         state.error = false
       })
-      .addCase(authUser.rejected, (state, action) => {
-        // console.error(action.payload, 'auth rejected')
-        // state.error = true
+      .addCase(authUser.rejected, (state) => {
         state.loading = false
-        // state.errorMessage = action.payload
       })
       .addCase(editProfile.fulfilled, (state, action) => {
         state.username = action.payload.user.username
@@ -180,15 +165,12 @@ const userSlice = createSlice({
         state.loading = false
         state.isSave = true
         state.errorMessage = false
-
-        // console.log(action.payload) // For debugging
       })
       .addCase(editProfile.pending, (state) => {
         state.loading = true
         state.error = false
         state.isSave = false
         state.errorMessage = false
-        // console.log('pending edit')
       })
       .addCase(editProfile.rejected, (state, action) => {
         state.loading = false
